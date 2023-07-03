@@ -137,33 +137,23 @@ module.exports = function (defaultFuncs, api, ctx) {
     }
 
     defaultFuncs
-    defaultFuncs
-  .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
-  .then(function (resData) {
-    if (!resData) {
-      return callback({ error: "Send message failed." });
-    }
+      .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
+      .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
+      .then(function (resData) {
+        if (!resData) {
+          return callback({ error: "Send message failed." });
+        }
 
-    if (resData.error) {
-      if (resData.error === 1545012) {
-        log.warn(
-          "sendMessage",
-          "Got error 1545012. This might mean that you're not part of the conversation " +
-          threadID
-        );
-      }
-      return callback(resData);
-    }
-
-    // Perform the login check only once after sending the message
-    return utils.parseAndCheckLogin(ctx, defaultFuncs)
-      .then(function () {
-        callback(resData);
-      })
-      .catch(function (error) {
-        callback({ error: "Login check failed." });
-      });
-  });
+        if (resData.error) {
+          if (resData.error === 1545012) {
+            log.warn(
+              "sendMessage",
+              "Got error 1545012. This might mean that you're not part of the conversation " +
+              threadID
+            );
+          }
+          return callback(resData);
+        }
 
         var messageInfo = resData.payload.actions.reduce(function (p, v) {
           return (
