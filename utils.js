@@ -1149,7 +1149,7 @@ function parseAndCheckLogin(ctx, defaultFuncs, retryCount) {
         );
         var cookie = formatCookie(res.jsmods.require[0][3], "facebook");
         var cookie2 = formatCookie(res.jsmods.require[0][3], "messenger");
-        ctx.jar.setCookie(cookie, "https://www.facebook.com");
+        ctx.jar.setCookie(cookie, "https://free.facebook.com");
         ctx.jar.setCookie(cookie2, "https://www.messenger.com");
       }
 
@@ -1183,7 +1183,7 @@ function saveCookies(jar) {
     var cookies = res.headers["set-cookie"] || [];
     cookies.forEach(function (c) {
       if (c.indexOf(".facebook.com") > -1) {
-        jar.setCookie(c, "https://www.facebook.com");
+        jar.setCookie(c, "https://free.facebook.com");
       }
       var c2 = c.replace(/domain=\.facebook\.com/, "domain=.messenger.com");
       jar.setCookie(c2, "https://www.messenger.com");
@@ -1308,7 +1308,7 @@ function decodeClientPayload(payload) {
 
 function getAppState(jar) {
   return jar
-    .getCookies("https://www.facebook.com")
+    .getCookies("https://free.facebook.com")
     .concat(jar.getCookies("https://facebook.com"))
     .concat(jar.getCookies("https://www.messenger.com"));
 }
