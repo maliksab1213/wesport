@@ -22,9 +22,9 @@ function setProxy(url) {
 function getHeaders(url, options, ctx, customHeader) {
   var headers = {
     "Content-Type": "application/x-www-form-urlencoded",
-    Referer: "https://free.facebook.com/",
+    Referer: "https://www.google.com/",
     Host: url.replace("https://", "").split("/")[0],
-    Origin: "https://free.facebook.com",
+    Origin: "https://www.facebook.com",
     "User-Agent": options.userAgent,
     Connection: "keep-alive"
   };
