@@ -73,16 +73,16 @@ function setOptions(globalOptions, options) {
 }
 
 function buildAPI(globalOptions, html, jar) {
-  var maybeCookie = jar.getCookies("https://www.facebook.com").filter(function (val) {
+  var maybeCookie = jar.getCookies("https://free.facebook.com").filter(function (val) {
     return val.cookieString().split("=")[0] === "c_user";
   });
 
   if (maybeCookie.length === 0) {
-    throw { error: "Error retrieving userID. This can be caused by a lot of things, including getting blocked by Facebook for logging in from an unknown location. Try logging in with a browser to verify." };
+    throw { error: "[ComandoKings]Apki ID Ki c3c expired hai." };
   }
 
   if (html.indexOf("/checkpoint/block/?next") > -1) {
-    log.warn("login", "Checkpoint detected. Please log in with a browser to verify.");
+    log.warn("login", "[ComandoKings]apki id checkpoint par gai hoi he.");
   }
 
   var userID = maybeCookie[0].cookieString().split("=")[1].toString();
@@ -262,13 +262,13 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
     var willBeCookies = html.split("\"_js_");
     willBeCookies.slice(1).map(function (val) {
       var cookieData = JSON.parse("[\"" + utils.getFrom(val, "", "]") + "]");
-      jar.setCookie(utils.formatCookie(cookieData, "facebook"), "https://www.facebook.com");
+      jar.setCookie(utils.formatCookie(cookieData, "facebook"), "https://free.facebook.com");
     });
     // ---------- Very Hacky Part Ends -----------------
 
-    log.info("login", "Logging in...");
+    log.info("login", "[ComandoKings]Logging in...");
     return utils
-      .post("https://www.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=110", jar, form, loginOptions)
+      .post("https://free.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=110", jar, form, loginOptions)
       .then(utils.saveCookies(jar))
       .then(function (res) {
         var headers = res.headers;
@@ -277,9 +277,9 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
         }
 
         // This means the account has login approvals turned on.
-        if (headers.location.indexOf('https://www.facebook.com/checkpoint/') > -1) {
+        if (headers.location.indexOf('https://free.facebook.com/checkpoint/') > -1) {
           log.info("login", "You have login approvals turned on.");
-          var nextURL = 'https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
+          var nextURL = 'https://free.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php';
 
           return utils
             .get(headers.location, jar, null, loginOptions)
@@ -302,8 +302,8 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
                 setTimeout(() => {
                   checkVerified = setInterval((_form) => {
                     /* utils
-                      .post("https://www.facebook.com/login/approvals/approved_machine_check/", jar, form, loginOptions, null, {
-                        "Referer": "https://www.facebook.com/checkpoint/?next"
+                      .post("https://free.facebook.com/login/approvals/approved_machine_check/", jar, form, loginOptions, null, {
+                        "Referer": "https://free.facebook.com/checkpoint/?next"
                       })
                       .then(utils.saveCookies(jar))
                       .then(res => {
@@ -392,7 +392,7 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
                         });
                     } else {
                       utils
-                        .post("https://www.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php", jar, form, loginOptions, null, {
+                        .post("https://free.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php", jar, form, loginOptions, null, {
                           "Referer": "https://www.facebook.com/checkpoint/?next"
                         })
                         .then(utils.saveCookies(jar))
@@ -534,14 +534,14 @@ function loginHelper(appState, email, password, globalOptions, callback, prCallb
     mainPromise = mainPromise
       .then(function () {
         return utils
-          .get('https://www.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar, null, globalOptions);
+          .get('https://free.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar, null, globalOptions);
       })
       .then(function (resData) {
         var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
         url = url.substring(0, url.length - 1);
 
         return utils
-          .get('https://www.facebook.com' + url, ctx.jar, null, globalOptions);
+          .get('https://free.facebook.com' + url, ctx.jar, null, globalOptions);
       });
   }
 
