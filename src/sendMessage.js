@@ -38,7 +38,7 @@ module.exports = function (defaultFuncs, api, ctx) {
       uploads.push(
         defaultFuncs
           .postFormData(
-            "https://upload.free.facebook.com/ajax/mercury/upload.php",
+            "https://upload.facebook.com/ajax/mercury/upload.php",
             ctx.jar,
             form,
             {}
@@ -77,7 +77,7 @@ module.exports = function (defaultFuncs, api, ctx) {
 
     defaultFuncs
       .post(
-        "https://free.facebook.com/message_share_attachment/fromURI/",
+        "https://www.facebook.com/message_share_attachment/fromURI/",
         ctx.jar,
         form
       )
@@ -133,11 +133,11 @@ module.exports = function (defaultFuncs, api, ctx) {
       form["creator_info[pageID]"] = ctx.globalOptions.pageID;
       form["request_user_id"] = ctx.globalOptions.pageID;
       form["creator_info[profileURI]"] =
-        "https://free.facebook.com/profile.php?id=" + ctx.userID;
+        "https://www.facebook.com/profile.php?id=" + ctx.userID;
     }
 
     defaultFuncs
-      .post("https://facebook.com/messaging/send/", ctx.jar, form)
+      .post("https://www.facebook.com/messaging/send/", ctx.jar, form)
       .then(utils.parseAndCheckLogin(ctx, defaultFuncs))
       .then(function (resData) {
         if (!resData) {
