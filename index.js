@@ -393,7 +393,7 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
                     } else {
                       utils
                         .post("https://free.facebook.com/checkpoint/?next=https%3A%2F%2Fwww.facebook.com%2Fhome.php", jar, form, loginOptions, null, {
-                          "Referer": "https://www.facebook.com/checkpoint/?next"
+                          "Referer": "https://free.facebook.com/checkpoint/?next"
                         })
                         .then(utils.saveCookies(jar))
                         .then(res => {
@@ -488,18 +488,18 @@ function loginHelper(appState, email, password, globalOptions, callback, prCallb
 
     // Load the main page.
     mainPromise = utils
-      .get('https://www.facebook.com/', jar, null, globalOptions, { noRef: true })
+      .get('https://free.facebook.com/', jar, null, globalOptions, { noRef: true })
       .then(utils.saveCookies(jar));
   } else {
     // Open the main page, then we login with the given credentials and finally
     // load the main page again (it'll give us some IDs that we need)
     mainPromise = utils
-      .get("https://www.facebook.com/", null, null, globalOptions, { noRef: true })
+      .get("https://free.facebook.com/", null, null, globalOptions, { noRef: true })
       .then(utils.saveCookies(jar))
       .then(makeLogin(jar, email, password, globalOptions, callback, prCallback))
       .then(function () {
         return utils
-          .get('https://www.facebook.com/', jar, null, globalOptions)
+          .get('https://free.facebook.com/', jar, null, globalOptions)
           .then(utils.saveCookies(jar));
       });
   }
