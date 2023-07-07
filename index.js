@@ -467,7 +467,7 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
         }
 
         return utils
-          .get('https://www.facebook.com/', jar, null, loginOptions)
+          .get('https://free.facebook.com/', jar, null, loginOptions)
           .then(utils.saveCookies(jar));
       });
   };
