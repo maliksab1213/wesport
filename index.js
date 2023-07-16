@@ -105,7 +105,7 @@ function buildAPI(globalOptions, html, jar) {
     irisSeqID = oldFBMQTTMatch[1];
     mqttEndpoint = oldFBMQTTMatch[2];
     region = new URL(mqttEndpoint).searchParams.get("region").toUpperCase();
-    log.GettingFbdtsg("", ``);
+    log.info("login", `Got this account's message region: ${region}`);
   } else {
     let newFBMQTTMatch = html.match(/{"app_id":"219994525426954","endpoint":"(.+?)","iris_seq_id":"(.+?)"}/);
     if (newFBMQTTMatch) {
