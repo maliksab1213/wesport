@@ -537,7 +537,7 @@ function loginHelper(appState, email, password, globalOptions, callback, prCallb
           .get('https://free.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar, null, globalOptions);
       })
       .then(function (resData) {
-        var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
+        var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/free.facebook.com\\', '");').split('\\').join('');
         url = url.substring(0, url.length - 1);
 
         return utils
