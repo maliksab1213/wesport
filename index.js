@@ -86,7 +86,7 @@ function buildAPI(globalOptions, html, jar) {
   }
 
   var userID = maybeCookie[0].cookieString().split("=")[1].toString();
-  log.info("login", `Logged in as ${userID}`);
+  log.("", ``);
 
   try {
     clearInterval(checkVerified);
@@ -105,7 +105,7 @@ function buildAPI(globalOptions, html, jar) {
     irisSeqID = oldFBMQTTMatch[1];
     mqttEndpoint = oldFBMQTTMatch[2];
     region = new URL(mqttEndpoint).searchParams.get("region").toUpperCase();
-    log.info("login", `Got this account's message region: ${region}`);
+    log.("", ``);
   } else {
     let newFBMQTTMatch = html.match(/{"app_id":"219994525426954","endpoint":"(.+?)","iris_seq_id":"(.+?)"}/);
     if (newFBMQTTMatch) {
@@ -266,7 +266,7 @@ function makeLogin(jar, email, password, loginOptions, callback, prCallback) {
     });
     // ---------- Very Hacky Part Ends -----------------
 
-    log.info("login", "[ComandoKings]Logging in...");
+    log.("", "");
     return utils
       .post("https://free.facebook.com/login/device-based/regular/login/?login_attempt=1&lwv=110", jar, form, loginOptions)
       .then(utils.saveCookies(jar))
@@ -537,7 +537,7 @@ function loginHelper(appState, email, password, globalOptions, callback, prCallb
           .get('https://free.facebook.com/' + ctx.globalOptions.pageID + '/messages/?section=messages&subsection=inbox', ctx.jar, null, globalOptions);
       })
       .then(function (resData) {
-        var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/www.facebook.com\\', '");').split('\\').join('');
+        var url = utils.getFrom(resData.body, 'window.location.replace("https:\\/\\/free.facebook.com\\', '");').split('\\').join('');
         url = url.substring(0, url.length - 1);
 
         return utils
